@@ -1,4 +1,6 @@
 package riccardo.U5W2D5.payloads;
 
-public record DeviceDTO() {
+import java.util.UUID;
+
+public record DeviceDTO(String type, String status, UUID employeeId) {
 }

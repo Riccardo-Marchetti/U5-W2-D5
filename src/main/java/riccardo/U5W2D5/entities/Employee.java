@@ -1,5 +1,6 @@
 package riccardo.U5W2D5.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -32,14 +33,14 @@ public class Employee {
     private String avatar;
 
     @OneToMany (mappedBy = "employee")
+    @JsonIgnore
     private List<Device> device;
 
-    public Employee(String username, String name, String surname, String email, String avatar, List<Device> device) {
+    public Employee(String username, String name, String surname, String email) {
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.avatar = "https://ui-avatars.com/api/?name=" + name + "+" + surname;
-        this.device = device;
     }
 }
