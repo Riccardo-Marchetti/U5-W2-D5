@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import riccardo.U5W2D5.entities.Device;
 import riccardo.U5W2D5.exceptions.NotFoundException;
 import riccardo.U5W2D5.payloads.DeviceDTO;

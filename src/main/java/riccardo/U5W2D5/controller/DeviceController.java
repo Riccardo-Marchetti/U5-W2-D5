@@ -41,7 +41,10 @@ public class DeviceController {
     }
 
     @PutMapping ("/{deviceId}")
-    private Device findDeviceAndUpdate (@PathVariable UUID deviceId, @RequestBody DeviceDTO body){
+    private Device findDeviceAndUpdate (@PathVariable UUID deviceId, @RequestBody @Validated DeviceDTO body, BindingResult validation){
+        if (validation.hasErrors()){
+            throw new BadRequestException(validation.getAllErrors());
+        }
         return this.deviceService.findDeviceByIdAndUpdate(deviceId, body);
     }
 
@@ -50,6 +53,5 @@ public class DeviceController {
     private void deleteDevice (@PathVariable UUID deviceId){
         this.deviceService.deleteDevice(deviceId);
     }
-
 
 }

@@ -1,5 +1,7 @@
 package riccardo.U5W2D5.services;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -7,12 +9,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import riccardo.U5W2D5.entities.Employee;
 import riccardo.U5W2D5.exceptions.BadRequestException;
 import riccardo.U5W2D5.exceptions.NotFoundException;
 import riccardo.U5W2D5.payloads.EmployeeDTO;
 import riccardo.U5W2D5.repositories.EmployeeDAO;
 
+import java.io.IOException;
 import java.util.UUID;
 
 @Service
@@ -20,6 +24,9 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeDAO employeeDAO;
+
+    @Autowired
+    private Cloudinary cloudinary;
 
     public Page<Employee> getAllEmployee (int page, int size, String sortBy){
         if (size > 50) size = 50;
@@ -55,5 +62,11 @@ public class EmployeeService {
     public void deleteEmployee (UUID id){
         Employee employee = this.employeeDAO.findById(id).orElseThrow(() -> new NotFoundException(id));
         this.employeeDAO.delete(employee);
+    }
+    public Employee uploadImage (MultipartFile image, UUID id) throws IOException {
+        Employee found = this.employeeDAO.findById(id).orElseThrow(() -> new NotFoundException(id));
+        String avatar = (String) cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap()).get("url");
+        found.setAvatar(avatar);
+        return this.employeeDAO.save(found);
     }
 }

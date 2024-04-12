@@ -41,6 +41,6 @@ public class Employee {
         this.name = name;
         this.surname = surname;
         this.email = email;
-        this.avatar = "https://ui-avatars.com/api/?name=" + name + "+" + surname;
+//        this.avatar = "https://ui-avatars.com/api/?name=" + name + "+" + surname;
     }
 }

@@ -10,4 +10,12 @@ import java.util.Map;
 
 @Configuration
 public class ImageConfig {
+    @Bean
+    public Cloudinary updateImage (@Value("${cloudinary.name}") String name,  @Value ("${cloudinary.key}") String key, @Value ("${cloudinary.secret}") String secret){
+        Map<String, String> configuration = new HashMap<>();
+        configuration.put("cloud_name", name);
+        configuration.put("api_key", key);
+        configuration.put("api_secret", secret);
+        return new Cloudinary(configuration);
+    }
 }

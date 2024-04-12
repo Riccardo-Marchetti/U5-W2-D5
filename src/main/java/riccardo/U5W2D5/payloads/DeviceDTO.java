@@ -12,7 +12,7 @@ public record DeviceDTO(
                         @Size (min = 1 , max = 20, message = "Il tipo deve avere la lunghezza dei caratteri compresa tra 1 e 20")
                         String type,
                         @NotEmpty (message = "Lo stato è obbligatorio")
-                        @Size (min = 1 , max = 30, message = "lO stato deve avere la lunghezza dei caratteri compresa tra 1 e 30")
+                        @Size (min = 1 , max = 30, message = "lo stato deve avere la lunghezza dei caratteri compresa tra 1 e 30")
                         String status,
                         @NotNull (message = "L'id del dipendente è obbligatorio")
                         UUID employeeId) {
