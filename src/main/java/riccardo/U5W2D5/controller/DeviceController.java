@@ -13,5 +13,32 @@ import java.util.UUID;
 @RequestMapping ("/device")
 public class DeviceController {
 
+//    @GetMapping
+//    private List<Device> getAllDevice (){
+//
+//    }
+//
+//    @GetMapping ("/{deviceId}")
+//    private Device getDeviceById (@PathVariable UUID deviceId){
+//
+//    }
+//
+//    @PostMapping
+//    @ResponseStatus (HttpStatus.CREATED)
+//    private Device saveDevice(@RequestBody DeviceDTO body){
+//
+//    }
+//
+//    @PutMapping ("/{deviceId}")
+//    private Device findDeviceAndUpdate (@PathVariable UUID deviceId, @RequestBody DeviceDTO body){
+//
+//    }
+//
+//    @DeleteMapping ("/{deviceId}")
+//    @ResponseStatus (HttpStatus.NO_CONTENT)
+//    private void deleteDevice (@PathVariable UUID deviceId){
+//
+//    }
+
 
 }
