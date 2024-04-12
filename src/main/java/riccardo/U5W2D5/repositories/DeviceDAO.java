@@ -6,6 +6,7 @@ import riccardo.U5W2D5.entities.Device;
 
 import java.util.UUID;
 
+
 @Repository
 public interface DeviceDAO extends JpaRepository<Device, UUID> {
 }
