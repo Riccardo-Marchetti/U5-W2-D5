@@ -54,4 +54,18 @@ public class DeviceController {
         this.deviceService.deleteDevice(deviceId);
     }
 
+    @PutMapping ("/{deviceId}/assign/{employeeId}")
+    private Device assignToDevice (@PathVariable UUID deviceId, @PathVariable UUID employeeId) {
+        return this.deviceService.assignToDevice(deviceId, employeeId);
+    }
+
+    @PatchMapping ("/dismiss/{deviceId}")
+    private Device dismissFromDevice (@PathVariable UUID deviceId) {
+        return this.deviceService.dismissFromDevice(deviceId);
+    }
+
+    @PatchMapping ("/maintenance/{deviceId}")
+    private Device maintenanceDevice (@PathVariable UUID deviceId) {
+        return this.deviceService.maintenanceDevice(deviceId);
+    }
 }
