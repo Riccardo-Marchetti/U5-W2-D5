@@ -3,6 +3,7 @@ package riccardo.U5W2D5.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -21,6 +22,10 @@ public class Device {
 
     private String status;
 
+    private LocalDate maintenanceStartDate;
+
+    private LocalDate maintenanceEndDate;
+
     @ManyToOne
     @JoinColumn (name = "employee_id")
     private Employee employee;
@@ -29,5 +34,7 @@ public class Device {
         this.type = type;
         this.status = "Available";
         this.employee = null;
+        this.maintenanceStartDate = null;
+        this.maintenanceEndDate = null;
     }
 }

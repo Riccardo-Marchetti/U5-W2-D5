@@ -13,6 +13,7 @@ import riccardo.U5W2D5.exceptions.NotFoundException;
 import riccardo.U5W2D5.payloads.DeviceDTO;
 import riccardo.U5W2D5.repositories.DeviceDAO;
 
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -56,6 +57,12 @@ public class DeviceService {
         Employee employee = this.employeeService.findEmployeeById(employeeId);
         device.setEmployee(employee);
         device.setStatus("Assigned");
+        if (device.getMaintenanceStartDate() != null){
+            device.setMaintenanceStartDate(null);
+        }
+        if (device.getMaintenanceEndDate() != null){
+            device.setMaintenanceEndDate(null);
+        }
         return this.deviceDAO.save(device);
     }
 
@@ -64,17 +71,41 @@ public class DeviceService {
         if (device.getEmployee() != null) {
             device.setEmployee(null);
         }
+        if (device.getMaintenanceStartDate() != null){
+            device.setMaintenanceStartDate(null);
+        }
+        if (device.getMaintenanceEndDate() != null){
+            device.setMaintenanceEndDate(null);
+        }
         device.setStatus("Dismissed");
         return this.deviceDAO.save(device);
     }
     public Device maintenanceDevice (UUID deviceId){
         Device device = this.deviceDAO.findById(deviceId).orElseThrow(() -> new NotFoundException(deviceId));
-        if (device.getEmployee() != null) {
-            device.setEmployee(null);
+        if (device.getMaintenanceEndDate() != null && device.getMaintenanceEndDate().isBefore(LocalDate.now())) {
+            device.setStatus(null);
+            device.setMaintenanceStartDate(null);
+            device.setMaintenanceEndDate(null);
+        } else {
+            if (device.getEmployee() != null) {
+                device.setEmployee(null);
+            }
+            if (!Objects.equals(device.getStatus(), "Under Maintenance")) {
+                device.setStatus("Under Maintenance");
+            }
+            if (device.getMaintenanceStartDate() == null) {
+                device.setMaintenanceStartDate(LocalDate.now());
+            }
+            if (device.getMaintenanceEndDate() == null && device.getType().equalsIgnoreCase("smartphone")) {
+                device.setMaintenanceEndDate(LocalDate.now().plusWeeks(1));
+            }
+            if (device.getMaintenanceEndDate() == null && device.getType().equalsIgnoreCase("Tablet")) {
+                device.setMaintenanceEndDate(LocalDate.now().plusDays(10));
+            }
+            if (device.getMaintenanceEndDate() == null && device.getType().equalsIgnoreCase("Laptop")) {
+                device.setMaintenanceEndDate(LocalDate.now().plusWeeks(2));
+            }
         }
-       if (!Objects.equals(device.getStatus(), "Under Maintenance")) {
-           device.setStatus("Under Maintenance");
-       }
         return this.deviceDAO.save(device);
     }
 }
