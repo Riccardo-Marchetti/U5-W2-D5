@@ -64,8 +64,8 @@ public class DeviceController {
         return this.deviceService.dismissFromDevice(deviceId);
     }
 
-    @PatchMapping ("/maintenance/{deviceId}")
-    private Device maintenanceDevice (@PathVariable UUID deviceId) {
-        return this.deviceService.maintenanceDevice(deviceId);
+    @PatchMapping ("{deviceId}/maintenance/{employeeId}")
+    private Device maintenanceDevice (@PathVariable UUID deviceId, @PathVariable UUID employeeId) {
+        return this.deviceService.maintenanceDevice(deviceId, employeeId);
     }
 }
